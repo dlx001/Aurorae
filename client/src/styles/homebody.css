@@ -1,0 +1,88 @@
+body{
+    margin:0;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.heroText{
+    position: absolute;
+    top: 40%;
+    left: 30%;
+    transform: translate(-40%, -50%);
+}
+.heroContainer{
+    position:"relative";
+}
+.heroImage {
+    position: relative;
+    width: 100%;
+
+  }
+  .contactButton {
+    margin-top: 2em;
+    padding: 1em 2em;
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 24px;
+    border:#fff solid 1px;
+  }
+  
+  .contactButton:hover {
+    background-color: #fff;
+    color: #4ab6b4
+  }
+  
+  .aboutUsButton {
+    margin-top: 2em;
+    padding: 1em 2em;
+    border: none;
+    background-color: #fff;
+    color: #4ab6b4;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 24px;
+    border:#4ab6b4 solid 1px;
+    width:200px
+  }
+  
+  .aboutUsButton:hover {
+    background-color: #4ab6b4;
+    color: #fff
+  }
+
+ .textContent{
+  width:20%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:5%;
+  box-sizing:content-box
+ }
+ 
+.productsCard{
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.productTypeImg{
+  height:300px;
+  border-radius: 20px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+a {
+  text-decoration: none;
+  color: #fff;
+  &:hover{
+    color:#4ab6b4;
+  }
+}
