@@ -1,0 +1,19 @@
+{
+  "name": "ecommerce",
+  "version": "1.0.0",
+  "description": "This is a simple MERN ecommerce website for biology similar to Thermofisher.  This comes with an editor for the owner to add, update, and remove products from the store",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dlx001/Aurorae.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dlx001/Aurorae/issues"
+  },
+  "homepage": "https://github.com/dlx001/Aurorae#readme"
+}
