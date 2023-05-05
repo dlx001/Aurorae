@@ -10,16 +10,16 @@ function ItemCard(props) {
 
   return (
     <Link to={`/product/${props._id}`} style={{ textDecoration: 'none', color: 'black' }}>
-      <Card style={{border: "none"}} className="price-card product-card">
-  <div className="card-content">
-    <div className="card-image">
-      <Card.Img src={imgUrl} style={{ maxWidth: "100px", margin: "0 10px 0 0" }} />
-    </div>
-    <div className="card-text">
-      <Card.Title>{props.name}</Card.Title>
-      <Card.Text style={{ display: '-webkit-box', '-webkit-line-clamp': '2', '-webkit-box-orient': 'vertical', overflow: 'hidden' }}>{props.description}</Card.Text>
-    </div>
-  </div>
+      <Card style={{borderBottom: '2px solid rgba(0, 0, 0, 0.1)',borderLeft:"none",borderRight:"none", borderTop:"none",borderRadius:"0",paddingBottom: '20px',paddingTop:"20px"}} >
+      <div style={{display:"flex"}}>
+        <div style={{minWidth:"80px",margin: "0 10px 0 0"}}>
+          <Card.Img src={imgUrl} style={{ height:"80px",width:"auto"}} />
+        </div>
+        <div >
+          <Card.Title>{props.name}</Card.Title>
+          <Card.Text style={{ display: '-webkit-box', '-webkit-line-clamp': '2', '-webkit-box-orient': 'vertical', overflow: 'hidden' }}>{props.description}</Card.Text>
+        </div>
+      </div>
 </Card>
     </Link>
     

@@ -9,6 +9,7 @@ import { useState } from 'react'
 import About from './components/About'
 import { cartContext } from './Context/Context'
 import { TotalContext } from './Context/TotalContext'
+import Contact from './components/Contact'
 function App(){
 
   const [cart,setCart]=useState([]);
@@ -24,6 +25,7 @@ function App(){
       <Route path='/product/type/:id' element={<ProductTypeFinal></ProductTypeFinal>}></Route>
       <Route path='/cart' element={<Cart></Cart>}></Route>
       <Route path='/About' element={<About></About>}></Route>
+      <Route path='/Contact' element={<Contact></Contact>}></Route>
     </Routes>
     </TotalContext.Provider>
     </cartContext.Provider>

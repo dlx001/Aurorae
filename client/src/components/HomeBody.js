@@ -1,5 +1,4 @@
 import {Link} from 'react-router-dom'
-import { NavLink } from 'react-router-dom';
 import { Image } from 'react-bootstrap';
 import HeroImage from '../heroImage2Crop.png'
 import researchImage from '../WhoWeAre.png'
@@ -20,7 +19,10 @@ function HomeBody() {
         <h4 style={{color:"#4ab6b4"}}>W E L C O M E</h4>
         <h1 style={{fontSize:"80px", color:"#fff"}}>Tailored Cell Lines</h1>
           <h2 style={{color:"#fff"}}>For Targeted Research</h2>
+          <Link to="./contact">
           <button className="contactButton">Contact us</button>
+          </Link>
+         
         </div>
       </div>
         <div style={{display:"flex",justifyContent:"center",marginTop:"2%"}}>

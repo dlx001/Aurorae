@@ -15,7 +15,7 @@ const Footer =()=>{
             <div style={{display:"flex"}}>
                 <div style={{display:"flex",flexDirection:"column",padding:"40px"}}>
                     <h8 style={{color:"#4ab6b4"}}>WEBSITE</h8>
-                    <NavLink style={{ ':hover': { color: '#4ab6b4' } }} to= '/'>Home</NavLink>
+                    <NavLink  to= '/'>Home</NavLink>
                     <NavLink to='/products'>Products</NavLink>
                     <NavLink to='/About'>About Us</NavLink>
                     <NavLink to= '/Contact'>Contact</NavLink>

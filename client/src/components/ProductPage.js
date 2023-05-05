@@ -7,7 +7,7 @@ import React from 'react';
 import { Card, Button, Container, Table, Row, Col,ListGroup } from 'react-bootstrap';
 import { Buffer } from 'buffer';
 import Image from 'react-bootstrap/Image';
-
+import Footer from './Footer';
 function ProductPage() {
   const { cart, setCart } = useContext(cartContext);
   const { total, setTotal } = useContext(TotalContext);
@@ -45,7 +45,7 @@ function ProductPage() {
     <div>
       <Header isHome={false} />
       {data && (
-        <Container style={{paddingTop:"10%"}}>
+        <Container style={{paddingTop:"10%",paddingBottom:"10%s"}}>
           <Row style={{height:"100px"}}></Row>
           <Row xs={12} md={3}>
             <Image
@@ -94,7 +94,7 @@ function ProductPage() {
           <Row style={{height:"150px"}}></Row>
         </Container>
       )}
-      
+      <Footer></Footer>
     </div>
   );
 }
