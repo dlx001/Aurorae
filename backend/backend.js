@@ -1,14 +1,16 @@
 const express=require('express');
 const cors = require('cors');
 const mongoose = require("mongoose");
-const Item = require('./models/item.js');
+const {Item} = require('./models/item.js');
+const User = require('./models/User.js')
 const app =express();
 const fs= require('fs');
 const path=require('path');
+const dotenv=require('dotenv').config();
 var multer = require('multer');
 
 mongoose.set('strictQuery', true)
-const dbLink = "mongodb+srv://pacebook:test31415@cluster0.y7amop4.mongodb.net/?retryWrites=true&w=majority"
+const dbLink = process.env.MONGODB_URI;
 mongoose.connect(dbLink,{useNewURLParser: true, useUnifiedTopology: true}).then(()=>console.log("connected to database"));
 app.use(cors());
 app.use(express.json());
@@ -130,6 +132,54 @@ app.get('/products/type/:category',async(req,res)=>{
     console.error(err);
   }
 });
+
+app.put('/:user/',async(req,res)=>{
+  console.log("attempt");
+  const email = req.params.user;
+  let clientCart = req.body.cart;
+  if(!clientCart){
+    clientCart=[];
+  }
+  let total=req.body.total;
+  if(!total){
+    total=0;
+  }
+
+  console.log(req.body);
+  try {
+    let user = await User.findOne({ email: email });
+    
+    if(user==null){
+      user = new User({
+        email:email,
+        cart:clientCart,
+        total:total
+      });
+      await user.save();
+    }else{
+      let result = await User.updateOne({ email: email }, { cart: clientCart, total:total });
+      //console.log(cart);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+
+})
+app.get('/:user/',async(req,res)=>{
+  console.log("attempt to get");
+  const email = req.params.user;
+  try {
+    const user = await User.findOne({email:email})
+    if(user){
+      res.send({cart:user.cart,total:user.total})
+    }
+   
+  } catch (err) {
+    console.log(err);
+  }
+
+})
+
 app.listen(8000,()=>{
     console.log("server is running on 8000")
 })

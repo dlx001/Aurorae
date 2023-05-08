@@ -1,51 +1,78 @@
 import { cartContext } from "../Context/Context";
 import { TotalContext } from "../Context/TotalContext";
-import { useContext } from "react";
+import { useState,useContext,useEffect } from "react";
 import Header from './Header'
 import ItemCardCart from "./ItemCardCart";
 import { Link } from "react-router-dom";
 import { Col, Row,Container } from 'react-bootstrap';
+import Footer from "./Footer";
+import { useAuth0 } from '@auth0/auth0-react';
 function Cart(){
     const {cart,setCart} = useContext(cartContext);
     const {total,setTotal}= useContext(TotalContext);
-    
-      if(total==0){
+    const {loginWithRedirect,user} =useAuth0();
+    const [dataLoaded,setDataLoaded]=useState(false);
+
+    useEffect(() => {
+      if (user) {
+        fetch(`http://localhost:8000/${user.email}`)
+          .then(response => response.json())
+          .then(data => {
+            setTotal(data.total);
+            setCart(data.cart);
+            console.log(data.cart);
+            console.log(data.total);
+          });
+          setDataLoaded(true);
+      }
+    }, [user]);
+    console.log(cart);
+      if(total===0){
         
         return(<div>
-            <Header></Header>
-            <Container>
+            <Header isHome={false}></Header>
+            <Container style={{marginTop:"10%",  border: "1px solid #ccc",minHeight:"400px",marginBottom:"10%"}}>
         <Row>
           <Col xs={12} md={1}>
           </Col>
-          <Col xs={12} md={10}>
-            <h1>cart is empty</h1>
+          <Col xs={12} md={10} style={{display:"flex",flexDirection:"column",marginTop:"5%",alignItems:"center"}}>
+            <h1>Your cart is empty</h1>
+            {!user&&<div>
+              <button className="signupButton" onClick={()=>loginWithRedirect()} style={{marginRight:"10px"}}>Sign in to your account</button>
+            <button className="aboutUsButton" onClick={()=>loginWithRedirect()} style={{padding:"0.2em",textTransform:"none",fontWeight:"normal"}}>Sign up now</button>
+              </div>}
+           
           </Col>
           <Col xs={12} md={1}></Col>
         </Row>
       </Container>
+      <Footer></Footer>
            </div>)
       }
       return (
         <div>
           <Header isHome={false}></Header>
-          <Container style={{marginTop:"10%"}}>
+          <Container style={{marginTop:"10%",  border: "1px solid #ccc",minHeight:"400px",marginBottom:"10%"}}>
             <Row>
               <Col xs={12} md={2}></Col>
-              <Col xs={12} md={8}>
+              <Col xs={12} md={8} style={{marginTop:"2%"}}>
                 {cart.map(item => (
-                  <div>
+                  <div >
                     <ItemCardCart {...item} />
                   </div>
                 ))}
-                <h2 style={{ margin: "30px 0px", float: "right" }}>
+                <h4 style={{ margin: "30px 0px", float: "right" }}>
                   Total: ${(Math.round(total * 100) / 100).toFixed(2)}
-                </h2>
+                </h4>
                 <div style={{ clear: "both" }}></div>
-                <Link to="/products" style={{textDecoration: "none",margin: "30px 0px",float: "right"}}>Browse</Link>
+                {!user&&<button onClick={()=>loginWithRedirect()} >Sign in to Checkout</button>}
+                {user&&<button>checkout</button>}
+                <Link to="/products" style={{textDecoration: "none",margin: "30px 0px",float: "right",color:"black"}}>Browse</Link>
               </Col>
               <Col xs={12} md={2}></Col>
             </Row>
           </Container>
+          <Footer></Footer>
         </div>
       );
 }

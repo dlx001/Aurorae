@@ -26,10 +26,16 @@ const ItemSchema = new mongoose.Schema({
         required:true
       },
       stock:{
-        type:Number,
+        type:Number,  
         required:true
+      },
+      quantity:{
+        type:Number,
       }
 });
 
 const Item = mongoose.model('Item',ItemSchema);
-module.exports = Item;
+module.exports = {
+  Item: Item,
+  ItemSchema: ItemSchema
+};

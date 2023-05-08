@@ -1,6 +1,5 @@
 import NavBar from './NavBar'
-import Container from 'react-bootstrap/Container';
-import * as Icon from 'react-bootstrap-icons'
+
 
 function Header(props){
   

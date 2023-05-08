@@ -54,10 +54,10 @@ function ProductType() {
   //console.log(items);
   return (
     <div style={{ marginBottom: "10%" }}>
-      {itemDisplay&&itemDisplay.length==0&&<div style={{display:"flex",justifyContent:"center"}}>
+      {itemDisplay&&itemDisplay.length===0&&<div style={{display:"flex",justifyContent:"center"}}>
         <h1 style={{marginTop:"20px",color: "rgba(0, 0, 0, 0.5)"}}>no items found</h1>
       </div>}
-      {itemDisplay&&itemDisplay.length!=0&&itemDisplay.map((item) => (
+      {itemDisplay&&itemDisplay.length!==0&&itemDisplay.map((item) => (
         <ItemCard {...item} />
       ))}
       <div style={{ display: "flex", float: "right", marginTop: "20px" }}>

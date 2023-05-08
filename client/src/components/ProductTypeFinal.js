@@ -7,13 +7,7 @@ import Footer from "./Footer";
 function ProductFinal() {
   const [key, setKey] = useState(0);
   const location = useLocation();
-  const linkStyle={
-    color: "black",
-    textDecoration:"none",
-    ':hover':{
-      color:"#4ab6b4"
-    }
-  }
+ 
   useEffect(() => {
     setKey(key + 1);
   }, [location]);

@@ -1,5 +1,4 @@
-import React, {useState,useEffect} from 'react'
-import Container from 'react-bootstrap/Container';
+
 import Header from './Header'
 import  HomeBody from './HomeBody'
 import 'bootstrap/dist/css/bootstrap.min.css';
