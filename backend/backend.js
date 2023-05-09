@@ -60,6 +60,7 @@ app.delete('/editor/delete/:id',async(req,res)=>{
 
 app.put('/editor/update', upload.single('image'), async(req, res) => {
   let id=null;
+  console.log(req.body);
   try {
     const object = await Item.findOne({catalogNum:req.body.catalogNum}); 
     id = object._id;
@@ -96,7 +97,7 @@ app.get('/editor/:id', async (req, res) => {
   try {
       const object = await Item.findOne({catalogNum:catalogNum}); 
       res.json(object); 
-      console.log(object)
+      //console.log(object)
     } catch (err) {
       console.error(err);
     }

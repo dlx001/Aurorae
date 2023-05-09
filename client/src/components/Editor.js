@@ -4,6 +4,7 @@ import Button from "react-bootstrap/esm/Button";
 import ProductPreview from "./ProductPreview";
 function Editor(){
     const [formData,setFormData]=useState({name:'',description:'',price:0.00,image:null,category:'',catalogNum:0,stock:0});
+    const [formImage,setFormImage]=useState(null);
     const [queryData,setQueryData]=useState({catalogNum:0});
     const [previewObj,setPreviewObj]=useState([null]);
     const [showForm,setShowForm]= useState(false);
@@ -61,14 +62,25 @@ function Editor(){
       const {name,value}=event.target;
       setPreviewObj({...previewObj,[name]:value});
   }
-  const onUpdateFileChange = (event)=>{
+  const onUpdateFileChange = (event) => {
     const fileValue = event.target.files[0];
-    //console.log(fileValue);
-    setPreviewObj({
-      ...previewObj,
-      image:fileValue
-    })
-  }
+    setFormImage(fileValue);
+    const reader = new FileReader();
+    reader.onload = () => {
+      const buffer = new Uint8Array(reader.result);
+      const data = { type: 'Buffer', data: Array.from(buffer) };
+      setPreviewObj({
+        ...previewObj,
+        image: {
+          data,
+          contentType: fileValue.type,
+          name: fileValue.name,
+        },
+      });
+    };
+    reader.readAsArrayBuffer(fileValue);
+  };
+  
     const querySubmit = async(event)=>{
       event.preventDefault();
       try{
@@ -86,7 +98,7 @@ function Editor(){
       if(previewObj===null){
         return <h1>item not found</h1>
       }else{
-        return (<div>
+        return (<div style={{marginTop:"20px"}}>
           <ProductPreview {...previewObj}></ProductPreview>
         </div>
         
@@ -95,6 +107,7 @@ function Editor(){
     }
     const onSubmit = async (event) => {
       event.preventDefault();
+     
       try {
         let formDataObj = new FormData();
         formDataObj.append("name",formData.name);
@@ -110,6 +123,7 @@ function Editor(){
               body: formDataObj,
           });
           console.log(response);
+          setShowForm(false);
       } catch (error) {
           console.error(error);
       }
@@ -121,11 +135,15 @@ function Editor(){
       formDataObj.append("name",previewObj.name);
       formDataObj.append("description",previewObj.description);
       formDataObj.append("price",previewObj.price);
-      formDataObj.append("image",previewObj.image);
+      formDataObj.append("image", formImage);
       formDataObj.append("category",previewObj.category);
       formDataObj.append("stock",previewObj.stock);
       formDataObj.append("catalogNum",previewObj.catalogNum);
-        //console.log(formData);
+      for (const [key, value] of formDataObj.entries()) {
+        console.log(`${key}: ${value}`);
+      }
+      
+        console.log(formData);
         const response = await fetch('http://localhost:8000/editor/update', {
             method: 'PUT',
             body: formDataObj,
@@ -139,7 +157,7 @@ function Editor(){
     if(!previewObj){
       return <div>loading</div>
     }
-    return(<Form onSubmit={onUpdate}>
+    return(<Form onSubmit={onUpdate} >
       <Form.Group controlId="name">
         <Form.Label>Item Name</Form.Label>
         <Form.Control
@@ -178,6 +196,7 @@ function Editor(){
         />
       </Form.Group>
       <Form.Group>
+        <Form.Label>Select a Category</Form.Label>
         <Form.Select name = "category" onChange={onUpdateInputChange}>
         <option value="pick a category">empty</option>
           <option value="cell">cell</option>
@@ -204,13 +223,15 @@ function Editor(){
           onChange={onUpdateInputChange}
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button className='signupButton' type="submit">
         Update
       </Button>
     </Form>)
   }
   const formDisplay = ()=>{
-    return(<Form onSubmit={onSubmit}>
+    return(<div style={{marginTop:"20px"}}>
+      <h1>All Fields Must Be Filled</h1>
+       <Form onSubmit={onSubmit} >
       <Form.Group controlId="name">
         <Form.Label>Item Name</Form.Label>
         <Form.Control
@@ -249,6 +270,7 @@ function Editor(){
         />
       </Form.Group>
       <Form.Group>
+      <Form.Label>Select a Category</Form.Label>
         <Form.Select name = "category"  onChange={onInputChange}>
           <option value="pick a category">empty</option>
           <option value="cell">cell</option>
@@ -275,16 +297,19 @@ function Editor(){
           onChange={onInputChange}
         />
       </Form.Group>
-      <Button variant="primary" type="submit">
+      <Button className="signupButton" type="submit">
         Submit
       </Button>
-    </Form>)
+    </Form>
+
+    </div>
+   )
   }
 
   const queryDisplay = ()=>{
     return(
       <Form onSubmit={querySubmit}>
-        <Form.Group controlId="catalogNum">
+        <Form.Group controlId="catalogNum" style={{marginTop:"20px"}}>
         <Form.Label>CatalogNum</Form.Label>
         <Form.Control
           type="String"
@@ -293,7 +318,7 @@ function Editor(){
           onChange={onQueryChange}
         />
       </Form.Group>
-      <Button onClick={()=>setConfirm(true)}variant="primary" type="submit">
+      <Button className='signupButton' onClick={()=>setConfirm(true)}variant="primary" type="submit">
         Search
       </Button>
       </Form>
@@ -315,11 +340,12 @@ function Editor(){
     return(<Button onClick={()=>deleteItem()}>Remove</Button>);
   }
   return (
-    <div>
-      <div>
-      <Button onClick={onAddClick}> Add </Button>
-      <Button onClick={onUpdateClick}>Update</Button>
-      <Button onClick={onRemoveClick}>Remove</Button>
+    <div style={{display:"flex",flexDirection:"column",alignItems:"center",margin:"5%",border: "1px solid #ccc",minHeight:"300px",padding:"100px"}}>
+       <h1>CellCore Biolabs Item Editor</h1>
+      <div style={{display:"flex",flexDirection:"column"}}>
+      <Button className="signupButton" onClick={onAddClick}> Add </Button>
+      <Button className="signupButton" onClick={onUpdateClick}>Update</Button>
+      <Button className="signupButton" onClick={onRemoveClick}>Remove</Button>
       </div>
       {showForm && formDisplay()}
       {showQuery&&queryDisplay()}

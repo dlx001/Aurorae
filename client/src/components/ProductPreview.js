@@ -4,6 +4,7 @@ import { Buffer } from 'buffer';
 import Image from 'react-bootstrap/Image';
 
 function ProductPreview(props) {
+  console.log(props);
   return (
     <div>
       { 
@@ -15,6 +16,7 @@ function ProductPreview(props) {
               ).toString('base64')}`}
               style={{ width: '500px' }}
             />
+            
             <Col xs={12} md={6}>
               <div>
                 <h1>{props.name}</h1>

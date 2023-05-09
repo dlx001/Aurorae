@@ -66,8 +66,7 @@ function Cart(){
                 </h4>
                 <div style={{ clear: "both" }}></div>
                 {!user&&<button onClick={()=>loginWithRedirect()} >Sign in to Checkout</button>}
-                {user&&<button>checkout</button>}
-                <Link to="/products" style={{textDecoration: "none",margin: "30px 0px",float: "right",color:"black"}}>Browse</Link>
+                {user&&<button className="signupButton"style={{float:"right",marginTop:"0",marginBottom:"10px"}}>checkout</button>}
               </Col>
               <Col xs={12} md={2}></Col>
             </Row>
