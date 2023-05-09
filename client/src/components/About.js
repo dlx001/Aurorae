@@ -1,7 +1,7 @@
 import Header from "./Header";
 import {Image} from "react-bootstrap";
 import { Container } from "react-bootstrap";
-import researchImg from '../researcher.png'
+import researchImg from '../images/researcher.png'
 import Footer from "./Footer";
 const About= ()=>{
     return(

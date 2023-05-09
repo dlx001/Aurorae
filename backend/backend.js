@@ -8,12 +8,15 @@ const fs= require('fs');
 const path=require('path');
 const dotenv=require('dotenv').config();
 var multer = require('multer');
-
 mongoose.set('strictQuery', true)
+
+
 const dbLink = process.env.MONGODB_URI;
 mongoose.connect(dbLink,{useNewURLParser: true, useUnifiedTopology: true}).then(()=>console.log("connected to database"));
 app.use(cors());
 app.use(express.json());
+
+
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -25,6 +28,10 @@ const storage = multer.diskStorage({
   })
   const upload = multer({ storage: storage })
   
+
+  /*
+  * create new item
+  */
   app.post('/', upload.single('image'), (req, res) => {
     console.log("adding item");
     const { name, description, price, image,stock,catalogNum,category } = req.body;
@@ -45,6 +52,9 @@ const storage = multer.diskStorage({
         console.log(err);
     }
 });
+/*
+*delete item via editor
+*/
 app.delete('/editor/delete/:id',async(req,res)=>{
   let catalogNum = req.params.id;
   Item.deleteOne({catalogNum:catalogNum}).then(
@@ -57,7 +67,9 @@ app.delete('/editor/delete/:id',async(req,res)=>{
 
 })
 
-
+/*
+*update item via editor
+*/
 app.put('/editor/update', upload.single('image'), async(req, res) => {
   let id=null;
   console.log(req.body);
@@ -90,6 +102,12 @@ app.put('/editor/update', upload.single('image'), async(req, res) => {
     res.status(500).send("Internal server error");
   }
 });
+
+
+
+/*
+*retrieve item for item preview on editor
+*/
 app.get('/editor/:id', async (req, res) => {
   const catalogNum=req.params.id;
   console.log(catalogNum);
@@ -103,6 +121,10 @@ app.get('/editor/:id', async (req, res) => {
     }
 });
   
+/*
+* get all items from DB
+*/
+
 app.get('/products', async (req, res) => {
   //console.log("products")
     try {
@@ -112,6 +134,11 @@ app.get('/products', async (req, res) => {
         console.error(err);
       }
 });
+
+/*
+* get particular item from DB
+*/
+
 app.get('/products/:id', async (req, res) => {
   const id=req.params.id;
   //console.log("test");
@@ -124,6 +151,11 @@ app.get('/products/:id', async (req, res) => {
       console.error(err);
     }
 });
+
+/*
+* get all items of specific category type
+*/
+
 app.get('/products/type/:category',async(req,res)=>{
   try {
     let category = req.params.category;
@@ -134,8 +166,11 @@ app.get('/products/type/:category',async(req,res)=>{
   }
 });
 
+/*
+* creating user and storing cart
+*/
 app.put('/:user/',async(req,res)=>{
-  console.log("attempt");
+  
   const email = req.params.user;
   let clientCart = req.body.cart;
   if(!clientCart){
@@ -166,6 +201,10 @@ app.put('/:user/',async(req,res)=>{
   }
 
 })
+
+/*
+* retrieving user cart info
+*/
 app.get('/:user/',async(req,res)=>{
   console.log("attempt to get");
   const email = req.params.user;
@@ -180,6 +219,8 @@ app.get('/:user/',async(req,res)=>{
   }
 
 })
+
+
 
 app.listen(8000,()=>{
     console.log("server is running on 8000")

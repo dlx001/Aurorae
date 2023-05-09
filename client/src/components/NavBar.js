@@ -5,7 +5,7 @@ import { Dropdown} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NavLink } from 'react-router-dom';
 import {useState,useEffect} from 'react'
-import Logo from '../CellCoreLogo.png'
+import Logo from '../images/CellCoreLogo.png'
 import { useAuth0 } from '@auth0/auth0-react';
 import { cartContext } from '../Context/Context';
 import { TotalContext } from '../Context/TotalContext';

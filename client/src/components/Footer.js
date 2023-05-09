@@ -1,4 +1,4 @@
-import Logo from '../CellCoreLogo.png'
+import Logo from '../images/CellCoreLogo.png'
 import { NavLink } from 'react-router-dom';
 
 const Footer =()=>{

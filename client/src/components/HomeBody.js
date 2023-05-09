@@ -1,13 +1,13 @@
 import {Link} from 'react-router-dom'
 import { Image } from 'react-bootstrap';
-import HeroImage from '../heroImage2Crop.png'
-import researchImage from '../WhoWeAre.png'
-import cellImg from '../cellImg.png'
+import HeroImage from '../images/heroImage2Crop.png'
+import researchImage from '../images/WhoWeAre.png'
+import cellImg from '../images/cellImg.png'
 import '../styles/homebody.css'
-import gene from '../plasmid.png'
-import protein from '../protein.png'
-import cell from '../cell.png'
-import pipette from '../pipette.png'
+import gene from '../images/plasmid.png'
+import protein from '../images/protein.png'
+import cell from '../images/cell.png'
+import pipette from '../images/pipette.png'
 import Footer from './Footer';
 
 function HomeBody() {

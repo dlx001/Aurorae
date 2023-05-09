@@ -3,16 +3,16 @@ import { TotalContext } from "../Context/TotalContext";
 import { useState,useContext,useEffect } from "react";
 import Header from './Header'
 import ItemCardCart from "./ItemCardCart";
-import { Link } from "react-router-dom";
 import { Col, Row,Container } from 'react-bootstrap';
 import Footer from "./Footer";
 import { useAuth0 } from '@auth0/auth0-react';
 function Cart(){
+  
     const {cart,setCart} = useContext(cartContext);
     const {total,setTotal}= useContext(TotalContext);
     const {loginWithRedirect,user} =useAuth0();
-    const [dataLoaded,setDataLoaded]=useState(false);
 
+    //once user changes, load data from backend
     useEffect(() => {
       if (user) {
         fetch(`http://localhost:8000/${user.email}`)
@@ -23,10 +23,10 @@ function Cart(){
             console.log(data.cart);
             console.log(data.total);
           });
-          setDataLoaded(true);
       }
     }, [user]);
     console.log(cart);
+    //empty cart
       if(total===0){
         
         return(<div>
