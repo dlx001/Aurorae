@@ -83,6 +83,7 @@ function Editor(){
   
     const querySubmit = async(event)=>{
       event.preventDefault();
+ 
       try{
         const response = await fetch(`http://localhost:8000/editor/${queryData.catalogNum}`,{
           method: 'GET',
@@ -98,7 +99,8 @@ function Editor(){
       if(previewObj===null){
         return <h1>item not found</h1>
       }else{
-        return (<div style={{marginTop:"20px"}}>
+        return (<div style={{marginTop:"20px", border: "1px solid #ccc", padding:"50px"}}>
+          <h1 style={{marginBottom:"20px"}}>Product Preview</h1>
           <ProductPreview {...previewObj}></ProductPreview>
         </div>
         
@@ -107,7 +109,8 @@ function Editor(){
     }
     const onSubmit = async (event) => {
       event.preventDefault();
-     
+      setShowForm(false);
+      setAdd(false);
       try {
         let formDataObj = new FormData();
         formDataObj.append("name",formData.name);
@@ -123,12 +126,16 @@ function Editor(){
               body: formDataObj,
           });
           console.log(response);
-          setShowForm(false);
       } catch (error) {
           console.error(error);
       }
+     
   };
   const onUpdate = async (event) => {
+    setUpdate(false);
+    setShowQuery(false);
+    setConfirm(false);
+    setQuerySub(false);
     event.preventDefault();
     try {
       let formDataObj = new FormData();
@@ -139,11 +146,8 @@ function Editor(){
       formDataObj.append("category",previewObj.category);
       formDataObj.append("stock",previewObj.stock);
       formDataObj.append("catalogNum",previewObj.catalogNum);
-      for (const [key, value] of formDataObj.entries()) {
-        console.log(`${key}: ${value}`);
-      }
       
-        console.log(formData);
+        //console.log(formData);
         const response = await fetch('http://localhost:8000/editor/update', {
             method: 'PUT',
             body: formDataObj,
@@ -152,12 +156,13 @@ function Editor(){
     } catch (error) {
         console.error(error);
     }
+ 
 };
   const updateFormDisplay=()=>{
     if(!previewObj){
       return <div>loading</div>
     }
-    return(<Form onSubmit={onUpdate} >
+    return(update&&<Form onSubmit={onUpdate} >
       <Form.Group controlId="name">
         <Form.Label>Item Name</Form.Label>
         <Form.Control
@@ -307,8 +312,7 @@ function Editor(){
   }
 
   const queryDisplay = ()=>{
-    return(
-      <Form onSubmit={querySubmit}>
+    return(<Form onSubmit={querySubmit}>
         <Form.Group controlId="catalogNum" style={{marginTop:"20px"}}>
         <Form.Label>CatalogNum</Form.Label>
         <Form.Control
@@ -326,6 +330,10 @@ function Editor(){
     )
   }
   const deleteItem=async()=>{
+    setRemove(false);
+    setShowQuery(false);
+    setConfirm(false);
+    setQuerySub(false);
     try{
     const response = await fetch(`http://localhost:8000/editor/delete/${previewObj.catalogNum}`, {
             method: 'DELETE'
@@ -334,10 +342,11 @@ function Editor(){
     } catch (error) {
         console.error(error);
     }
+ 
 
   }
   const renderDeleteButton =()=>{
-    return(<Button onClick={()=>deleteItem()}>Remove</Button>);
+    return(<Button className="signupButton" onClick={()=>deleteItem()}>Remove</Button>);
   }
   return (
     <div style={{display:"flex",flexDirection:"column",alignItems:"center",margin:"5%",border: "1px solid #ccc",minHeight:"300px",padding:"100px"}}>
