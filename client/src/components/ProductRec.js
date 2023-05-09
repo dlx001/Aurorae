@@ -52,7 +52,7 @@ const ProductRec = (props)=>{
             setEndIndex(filterItem.length);
             setDisplayItem(filterItem.slice(newStart,filterItem.length));
         }
-        console.log(displayItem);
+        //console.log(displayItem);
       }
       const onLeftClick =()=>{
         setRightButtonVis(true);
@@ -61,7 +61,7 @@ const ProductRec = (props)=>{
         }else{
             setLeftButtonVis(true);
         }
-        if(endIndex%2!==0){
+        if(endIndex%3!==0){
             let newEnd = endIndex-endIndex%3;
             setEndIndex(newEnd);
             let newStart=startIndex-3;
@@ -74,8 +74,9 @@ const ProductRec = (props)=>{
             let newStart=startIndex-3;
             setStartIndex(newStart);
             setDisplayItem(filterItem.slice(newStart,newEnd));
+            console.log(filterItem);
         }
-        console.log(displayItem);
+        //console.log(displayItem);
         
       }
     useEffect(()=>{

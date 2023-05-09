@@ -12,8 +12,8 @@ function ProductType() {
   const { id } = useParams();
 
   useEffect(() => {
-    if (items&&items.length > 2) {
-      setItemDisplay(items.slice(0, 2));
+    if (items&&items.length > 5) {
+      setItemDisplay(items.slice(0, 5));
     } else {
       setItemDisplay(items);
     }
@@ -21,7 +21,7 @@ function ProductType() {
 
   const onClick = (event) => {
     let number = event.target.textContent;
-    setItemDisplay(items.slice((number - 1) * 2, number * 2));
+    setItemDisplay(items.slice((number - 1) * 5, number * 5));
     setNumSelect(number);
   };
 
@@ -44,7 +44,7 @@ function ProductType() {
       .then((response) => response.json())
       .then((data) => {
         setItems(data);
-        setNumButtons(Math.ceil(data.length / 2));
+        setNumButtons(Math.ceil(data.length / 5));
         setNumSelect(1); 
       })
       .catch((error) => {

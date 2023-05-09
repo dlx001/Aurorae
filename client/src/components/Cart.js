@@ -7,7 +7,7 @@ import { Col, Row,Container } from 'react-bootstrap';
 import Footer from "./Footer";
 import { useAuth0 } from '@auth0/auth0-react';
 function Cart(){
-  
+
     const {cart,setCart} = useContext(cartContext);
     const {total,setTotal}= useContext(TotalContext);
     const {loginWithRedirect,user} =useAuth0();
@@ -49,6 +49,7 @@ function Cart(){
       <Footer></Footer>
            </div>)
       }
+      console.log(total);
       return (
         <div>
           <Header isHome={false}></Header>
@@ -66,7 +67,8 @@ function Cart(){
                 </h4>
                 <div style={{ clear: "both" }}></div>
                 {!user&&<button onClick={()=>loginWithRedirect()} >Sign in to Checkout</button>}
-                {user&&<button className="signupButton"style={{float:"right",marginTop:"0",marginBottom:"10px"}}>checkout</button>}
+                {user&&<button className="signupButton"style={{float:"right",marginTop:"0",marginBottom:"10px"}} 
+                onClick={()=>window.alert("this functionality has not been built")}>checkout</button>}
               </Col>
               <Col xs={12} md={2}></Col>
             </Row>
